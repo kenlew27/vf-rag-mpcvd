@@ -1,0 +1,19 @@
+{
+  "formats": [
+    {
+      "name": "canonical_sample",
+      "pattern": "\\b(?P<identifier>LAB[_-]\\d+)\\b",
+      "predicates": [
+        {"field": "Sample ID", "capture": "identifier"}
+      ]
+    },
+    {
+      "name": "composite_process",
+      "pattern": "\\b(?P<family>[A-Za-z]+)(?P<unit>\\d+)_(?P<sequence>\\d+)\\b",
+      "predicates": [
+        {"field": "reactor", "template": "{family}-{unit}"},
+        {"field": "new_process_id", "capture": "sequence"}
+      ]
+    }
+  ]
+}

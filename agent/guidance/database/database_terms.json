@@ -1,0 +1,18 @@
+{
+  "growth temperature": ["growth_temp"],
+  "mean chamber pressure": ["growth_mean_pressure"],
+  "pressure stability": ["growth_std_pressue"],
+  "mean microwave power": ["growth_mean_power"],
+  "reflected power": ["growth_mean_reflected"],
+  "reflected-power stability": ["growth_std_reflected"],
+  "growth rate": ["growth_rate_µm_hr"],
+  "growth duration": ["growth_duration_hours"],
+  "grown thickness": ["grown_thickness_mm"],
+  "center thickness": ["center_thickness_mm"],
+  "root birefringence": ["root_birefringence"],
+  "birefringence": ["birefringence"],
+  "methane percentage": ["ch4_percent"],
+  "carbon-dioxide percentage": ["co2_percent"],
+  "hydrogen percentage": ["h2_percent"],
+  "nitrogen percentage": ["h2n2_percent"]
+}

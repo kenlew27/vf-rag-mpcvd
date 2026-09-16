@@ -1,0 +1,13 @@
+# API keys
+.env
+!.env.example
+
+# Proprietary data
+database_results.csv
+reactor_data/
+*.sql
+
+# Python
+__pycache__/
+*.pyc
+.venv/

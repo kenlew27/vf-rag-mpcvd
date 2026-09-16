@@ -1,0 +1,202 @@
+[
+  {
+    "query": "Consult the database alone for Sample ID SAMPLE_XXX and report its recorded process conditions and measured outcomes. Include recipe, temperature, chamber pressure, microwave power, growth duration, growth rate, thickness, morphology, and final-quality or characterization fields when present; explicitly note each requested field that is not recorded.",
+    "difficulty": "easy"
+  },
+  {
+    "query": "For Sample ID SAMPLE_XXX, report the recorded growth recipe, temperature, chamber pressure, microwave power, growth duration, growth rate, thickness, morphology, and characterization outcomes.",
+    "difficulty": "easy"
+  },
+  {
+    "query": "Examine the database records for runs on reactor REACTOR_XX and compare chamber-pressure stability with microwave-power stability. Report the relevant recorded values for each run, then identify any observed range or variation; do not use published literature or invent a stability threshold.",
+    "difficulty": "easy"
+  },
+  {
+    "query": "How does nitrogen addition affect single-crystal diamond growth rate and surface morphology according to published research?",
+    "difficulty": "easy"
+  },
+  {
+    "query": "What substrate-miscut range is reported to support coherent nitrogen-vacancy ensembles while limiting hillock defects?",
+    "difficulty": "easy"
+  },
+  {
+    "query": "For Sample ID SAMPLE_XXX, calculate an average growth rate from the recorded grown thickness and growth duration, compare it with the reported growth rate, and report its morphology and quality indicators.",
+    "difficulty": "easy"
+  },
+  {
+    "query": "What does the literature say about the coupled effects of 800-950 C growth temperature and 75-200 ppm nitrogen on growth mode in thick CVD diamond?",
+    "difficulty": "easy"
+  },
+  {
+    "query": "Within database records for reactor REACTOR_XX, identify the runs with the highest recorded growth rates without defining a threshold. Report their growth conditions, morphology, and birefringence.",
+    "difficulty": "easy"
+  },
+  {
+    "query": "Summarize the reported stable high-pressure operating window for single-crystal diamond growth between 180 and 300 Torr.",
+    "difficulty": "easy"
+  },
+  {
+    "query": "Review database records associated with holder H_96_n3 and report the recorded process conditions and final-quality results for each matching run. Separate process conditions from outcome fields and explicitly note requested information that is not recorded.",
+    "difficulty": "easy"
+  },
+  {
+    "query": "What growth rates, pressure range, and uniformity considerations have been reported for 915 MHz microwave CVD diamond growth?",
+    "difficulty": "easy"
+  },
+  {
+    "query": "For project PROJ-A, draw exclusively on database records to report each run's recorded nitrogen, methane, and carbon-dioxide recipe settings together with growth rate and morphology. Identify each run separately and explicitly note any requested field that is not recorded.",
+    "difficulty": "easy"
+  },
+  {
+    "query": "What does published work report about high-methane diamond growth in hydrogen-rich and argon-containing plasmas, including soot formation?",
+    "difficulty": "easy"
+  },
+  {
+    "query": "Compare runs from reactors REACTOR_XX and REACTOR_XX by growth duration, chamber pressure, microwave power, growth rate, morphology, and final characterization.",
+    "difficulty": "easy"
+  },
+  {
+    "query": "According to published studies, how can substrate-surface damage influence the origin and type of dislocations in homoepitaxial diamond?",
+    "difficulty": "easy"
+  },
+  {
+    "query": "For Sample ID SAMPLE_XXX, report the recorded process conditions, process stability measurements, anomaly indicators, morphology, and measured outcomes.",
+    "difficulty": "easy"
+  },
+  {
+    "query": "What evidence does the literature provide that an ultraflat substrate can prevent the formation of new dislocations during diamond epitaxy?",
+    "difficulty": "easy"
+  },
+  {
+    "query": "Rank project PROJ-A's database records by growth rate. For each ranked run, report the recorded growth temperature, thickness, and birefringence; do not omit or infer missing values.",
+    "difficulty": "easy"
+  },
+  {
+    "query": "How has oxygen-assisted CVD been reported to affect defect suppression, surface roughness, and impurity control in diamond (100) growth?",
+    "difficulty": "easy"
+  },
+  {
+    "query": "Compare Sample IDs SAMPLE_XXX and SAMPLE_XXX by recipe, growth duration, growth rate, thickness, morphology, and quality indicators.",
+    "difficulty": "easy"
+  },
+  {
+    "query": "What relationship between reactor size, discharge size, pressure, and microwave power density is described in the CVD diamond literature?",
+    "difficulty": "easy"
+  },
+  {
+    "query": "Inspect database records for runs on reactor REACTOR_XX and identify those marked with gas or temperature anomalies. For each matching run, report chamber pressure, microwave power, reflected power, and outcome metrics; explicitly note requested values that are not recorded.",
+    "difficulty": "easy"
+  },
+  {
+    "query": "What does the literature report about nitrogen distribution through high-growth-rate single-crystal diamond and its connection to local temperature?",
+    "difficulty": "easy"
+  },
+  {
+    "query": "Review database records for runs using holder H_96_n3 and report each matching run's growth duration, grown thickness, growth rate, and final morphology. Identify each run separately and explicitly note missing requested fields.",
+    "difficulty": "easy"
+  },
+  {
+    "query": "What holder-design changes have been reported to enable nearly 2 mm of one-step CVD diamond growth while avoiding polycrystalline rims?",
+    "difficulty": "easy"
+  },
+  {
+    "query": "Compare database records for Sample ID SAMPLE_XXX with published findings that nitrogen additions around 0.8-1.2% can accelerate growth but can also promote roughening and hillocks. Report SAMPLE_XXX's recorded nitrogen setting, growth rate, and morphology first; then state separately whether each recorded observation is consistent with the published findings. Do not substitute literature values for missing database fields.",
+    "difficulty": "hard"
+  },
+  {
+    "query": "For Sample ID SAMPLE_XXX, report the recorded microwave power, chamber pressure, growth rate, morphology, and surface-quality indicators. Compare these measurements with published conditions for low-roughness single-crystal diamond growth.",
+    "difficulty": "hard"
+  },
+  {
+    "query": "Across project PROJ-A, identify the runs with the highest recorded growth rates without defining a threshold. Report their nitrogen, methane, and carbon-dioxide settings together with morphology and quality indicators, then compare the observed patterns with published high-rate growth mechanisms.",
+    "difficulty": "hard"
+  },
+  {
+    "query": "For database records using holder H_96_n3, report the recorded substrate miscut, growth rate, and morphology for each matching run. Then use published research on step-flow growth, hillock formation, and nitrogen-related defect placement to assess the observations. Clearly separate database measurements from literature-based interpretation and identify any missing field that prevents a conclusion.",
+    "difficulty": "hard"
+  },
+  {
+    "query": "Across database records for runs on reactor REACTOR_XX, compare chamber-pressure stability and microwave-power stability for each run. Use published research to explain how plasma nonuniformity could relate to the observed measurements. Recommend one follow-up experiment that measures a specific variable and explain what result would distinguish the most plausible explanation; do not recommend an experiment unsupported by the recorded measurements or literature.",
+    "difficulty": "hard"
+  },
+  {
+    "query": "For database records from reactors REACTOR_XX, REACTOR_XX, and REACTOR_XX, report the recorded chamber pressure, microwave power, and growth rate for each run. Then use published research on the 180-300 Torr high-pressure growth regime to assess similarities and differences. Clearly separate database measurements from literature interpretation and identify missing fields that prevent a comparison.",
+    "difficulty": "hard"
+  },
+  {
+    "query": "For Sample ID SAMPLE_XXX, report the recorded growth temperature, nitrogen setting, growth rate, and morphology. Compare the record with published research on transitions between step-flow growth and two-dimensional nucleation.",
+    "difficulty": "hard"
+  },
+  {
+    "query": "For Sample ID SAMPLE_XXX, report the recorded methane setting, growth rate, morphology, and defect observations. Assess the record using published research on high-methane diamond growth and soot formation.",
+    "difficulty": "hard"
+  },
+  {
+    "query": "Across project PROJ-A, report each run's chamber pressure, growth rate, morphology, and quality outcomes. Compare the recorded pressures with the 90\u2013180 Torr range reported for large-area 915 MHz diamond growth.",
+    "difficulty": "hard"
+  },
+  {
+    "query": "For Sample ID SAMPLE_XXX, use database records to report the recorded sample source, substrate miscut, and defect notes. Then use published research to describe reported differences between CVD and HPHT seed substrates, stating separately whether SAMPLE_XXX's recorded fields support, contradict, or are insufficient to assess that comparison.",
+    "difficulty": "hard"
+  },
+  {
+    "query": "For database records using holder H_96_n3, report the recorded outcomes for each matching run, including lateral-growth or morphology information when present. Then use published research on holder geometry, lateral growth, and polycrystalline-rim formation to assess the observations. Recommend one controlled holder experiment only if its measured variable and discriminating result are supported by the database evidence and literature.",
+    "difficulty": "hard"
+  },
+  {
+    "query": "Across database records for project PROJ-A, identify runs with recorded growth rates above 50 micrometers per hour. For each matching run, report the nitrogen setting, temperature history, and quality notes when recorded. Then use published research to assess whether these measurements resemble reported nonuniform nitrogen incorporation at high rate, clearly separating observations from interpretation.",
+    "difficulty": "hard"
+  },
+  {
+    "query": "For reactor REACTOR_XX, compare runs with growth temperatures inside the 1030\u20131250 \u00b0C range against the reactor's other runs. Report their growth rates, morphology, and quality indicators, then assess the observations using published high-pressure-growth research.",
+    "difficulty": "hard"
+  },
+  {
+    "query": "For Sample ID SAMPLE_XXX, report the recorded chamber pressure, microwave power, growth rate, morphology, birefringence, and surface-quality indicators. Compare the record with published observations from 300 Torr homoepitaxial growth.",
+    "difficulty": "hard"
+  },
+  {
+    "query": "Across database records for reactors REACTOR_XX, REACTOR_XX, and REACTOR_XX, report the recorded mean microwave power and reflected power for each run. Then use published research on microwave discharge-size scaling to assess whether the reactor-level measurements are consistent with reported scaling effects. Do not claim that a database association establishes causation.",
+    "difficulty": "hard"
+  },
+  {
+    "query": "For runs using holder H_362_n1, report substrate miscut, growth conditions, morphology, birefringence, and defect observations. Assess the results using published research on ultraflat substrates and dislocation suppression.",
+    "difficulty": "hard"
+  },
+  {
+    "query": "Across database records for project PROJ-A, identify runs with the highest recorded birefringence or with recorded defect notes, without inventing an elevated-birefringence threshold. Report their process conditions and recorded defect-related fields. Then use published dislocation-characterization research to identify which recorded conditions should be prioritized for targeted defect analysis, separating measured patterns from literature-based recommendations.",
+    "difficulty": "hard"
+  },
+  {
+    "query": "For database records using holder H_96_n3, report the recorded growth duration, growth rate, and thickness for each matching run. Then use published research on one-step thick growth to assess whether the measurements point more strongly to holder performance or process time as the next limit to investigate. State when the database evidence is insufficient to distinguish those explanations.",
+    "difficulty": "hard"
+  },
+  {
+    "query": "Across database records for project PROJ-A, identify the runs with the lowest recorded nitrogen settings without inventing a low-nitrogen threshold, and report their nitrogen units and recorded quality metrics. Then use published research on low-nitrogen high-purity diamond to assess whether the records are consistent with that regime. Keep unit conversion, database measurements, and literature interpretation separate.",
+    "difficulty": "hard"
+  },
+  {
+    "query": "Compare Sample IDs SAMPLE_XXX and SAMPLE_XXX by nitrogen setting, growth temperature, growth rate, morphology, and birefringence. Assess the differences using published research on nitrogen-driven growth enhancement and step-structure changes.",
+    "difficulty": "hard"
+  },
+  {
+    "query": "Across database records for project PROJ-A, report each run's recorded growth temperature, nitrogen setting, and morphology. Identify observed combinations or trends without inferring causation. Then use published research on coupled temperature-nitrogen effects to state where the database pattern agrees, disagrees, or lacks sufficient evidence for comparison.",
+    "difficulty": "hard"
+  },
+  {
+    "query": "For reactor REACTOR_XX, compare runs with chamber pressures inside the 180\u2013300 Torr range against the reactor's other runs. Report process variation, growth rate, morphology, and quality indicators, then assess the observations using published high-pressure operating research.",
+    "difficulty": "hard"
+  },
+  {
+    "query": "For database records from reactors REACTOR_XX and REACTOR_XX, report the recorded process conditions and outcomes relevant to pressure, growth rate, and quality. Then use published research on large-area 915 MHz growth to compare pressure-related similarities. Keep reactor-frequency and scale differences separate, and state explicitly when the internal records cannot establish them.",
+    "difficulty": "hard"
+  },
+  {
+    "query": "Compare runs using holders H_362_n1 and H_410_n1 by growth duration, growth rate, thickness, morphology, birefringence, and final quality. Assess whether the observed differences resemble published effects of holder geometry on lateral and thick diamond growth.",
+    "difficulty": "hard"
+  },
+  {
+    "query": "Across database records for project PROJ-A, identify runs with the highest recorded reflected power without inventing a high-power threshold, and report their morphology and growth rate. Then use published research on plasma nonuniformity and carbon incorporation to assess whether the measurements are consistent with the reported behavior. Recommend one diagnostic only when its measured variable and expected result are supported by the database evidence and literature.",
+    "difficulty": "hard"
+  }
+]
