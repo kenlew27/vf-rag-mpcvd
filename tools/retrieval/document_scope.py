@@ -22,3 +22,8 @@ def normalize_document_scope(scope: str) -> DocumentScope:
     if scope.lower() in ("external", "ext"):
         return EXTERNAL_SCOPE
     raise ValueError(f"unknown document scope: {scope!r}")
+
+
+def normalize_document_scopes(scopes: list[str]) -> list[DocumentScope]:
+    """Map a list of scope strings to :class:`DocumentScope` objects."""
+    return [normalize_document_scope(s) for s in scopes]

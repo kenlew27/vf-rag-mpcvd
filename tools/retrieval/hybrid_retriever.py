@@ -15,6 +15,17 @@ class KeywordSearchHit:
     content: str = ""
 
 
+@dataclass
+class RetrievedChunkRef:
+    """Reference to a chunk returned by hybrid retrieval."""
+    chunk_id: str
+    score: float = 0.0
+    source: str = ""
+
+
+MAX_LIMIT = 500
+
+
 class KeywordChunkSearchIndex:
     """In-memory BM25 index over document chunks."""
     pass
