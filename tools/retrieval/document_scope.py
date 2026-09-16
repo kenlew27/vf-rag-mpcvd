@@ -15,8 +15,10 @@ EXTERNAL_SCOPE = DocumentScope(name="external", description="External published 
 DOCUMENT_SCOPE_KEY = "document_scope"
 
 
-def normalize_document_scope(scope: str) -> DocumentScope:
+def normalize_document_scope(scope) -> DocumentScope:
     """Map a scope string like ``"internal"`` to its :class:`DocumentScope`."""
+    if isinstance(scope, DocumentScope):
+        return scope
     if scope.lower() in ("internal", "int"):
         return INTERNAL_SCOPE
     if scope.lower() in ("external", "ext"):

@@ -10,7 +10,12 @@ class ChunkRecord:
     chunk_id: str = ""
     document_id: str = ""
     content: str = ""
+    text: str = ""
     metadata: dict[str, Any] = field(default_factory=dict)
+    artifact_uris: dict[str, str] = field(default_factory=dict)
+    is_leaf: bool = False
+    parent_chunk_id: str = ""
+    source_uri: str = ""
 
 
 @dataclass
@@ -19,6 +24,8 @@ class DocumentRecord:
     document_id: str = ""
     title: str = ""
     source: str = ""
+    source_uri: str = ""
+    ingest_status: str = ""
     metadata: dict[str, Any] = field(default_factory=dict)
 
 

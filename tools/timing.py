@@ -3,11 +3,20 @@
 from contextlib import contextmanager
 
 
-def agent_timing(name: str):
-    """Decorator that records execution time of an agent step."""
-    def decorator(fn):
+class agent_timing:
+    """Dual-use: works as both a decorator and a context manager for timing agent steps."""
+
+    def __init__(self, name: str):
+        self.name = name
+
+    def __call__(self, fn):
         return fn
-    return decorator
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, *exc):
+        return False
 
 
 def emit_agent_timing(name: str, elapsed_ms: float) -> None:
@@ -15,6 +24,6 @@ def emit_agent_timing(name: str, elapsed_ms: float) -> None:
 
 
 @contextmanager
-def agent_timing_context(name: str):
-    """Context manager variant of :func:`agent_timing`."""
+def agent_timing_context(context: dict | str = ""):
+    """Context manager that sets timing context for nested agent_timing calls."""
     yield
