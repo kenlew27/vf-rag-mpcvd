@@ -28,6 +28,14 @@ class ChunkStore(Protocol):
     def get_chunks(self, chunk_ids: list[str]) -> list[ChunkRecord]: ...
 
 
+@dataclass
+class VectorSearchHit:
+    """Single result from a vector similarity search."""
+    chunk_id: str = ""
+    distance: float = 0.0
+    metadata: dict[str, Any] = field(default_factory=dict)
+
+
 class VectorSearchIndex(Protocol):
     """Read interface for the LanceDB vector index."""
     def search(self, query_vector: list[float], top_k: int = 5) -> list[ChunkRecord]: ...
