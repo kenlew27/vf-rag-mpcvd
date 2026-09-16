@@ -8,7 +8,6 @@ This directory should contain the anonymised scientist evaluation CSVs.
 |:-----|:------------|
 | `scientist_scores_grader_A.csv` | 50 ratings from Grader A |
 | `scientist_scores_grader_B.csv` | 50 ratings from Grader B |
-| `grading_workbench.html` | Blinded HTML grading instrument |
 
 ## CSV Schema
 

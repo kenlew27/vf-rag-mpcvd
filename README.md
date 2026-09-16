@@ -62,7 +62,6 @@ access to the cloud environment.
 | CVD diamond question set | 50 questions across 3 complexity buckets (B1: database lookup, B2: database + literature, R: research hypothesis) |
 | Claim verification fixtures | 1,203 atomic claims with gold labels (supported/unsupported/contradicted) derived from genuine model outputs |
 | Scientist evaluation scores | 100 anonymised ratings from 2 independent domain scientists on groundedness, correctness, and scientific rigor (5-point Likert scales) |
-| Grading workbench | Single-page HTML instrument used for blinded evaluation |
 | Scoring scripts | Reproduce all Wilson CIs, means, SDs, inter-rater agreement, and bucket breakdowns |
 | Evaluation rubric | Definitions for all three rating dimensions |
 
