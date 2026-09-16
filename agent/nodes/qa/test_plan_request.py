@@ -102,7 +102,7 @@ class PlanRequestTests(unittest.TestCase):
 
     def test_compound_sample_metric_question_uses_narrow_database_subquestion(self):
         question = (
-            "For SAMPLE_0083, is the H2N2 setting consistent with the trends in research "
+            "For SAMPLE_X083, is the H2N2 setting consistent with the trends in research "
             "on nitrogen addition during high-rate homoepitaxial diamond growth?"
         )
         client = _Client({
@@ -110,7 +110,7 @@ class PlanRequestTests(unittest.TestCase):
             "knowledge_sources": ["structured_data", "external_literature"],
             "status": "ready",
             "reasons": [],
-            "structured_data_question": "Retrieve the H2N2 setting for SAMPLE_0083.",
+            "structured_data_question": "Retrieve the H2N2 setting for SAMPLE_X083.",
         })
 
         result = plan_request(
@@ -121,7 +121,7 @@ class PlanRequestTests(unittest.TestCase):
 
         self.assertEqual(
             result.request_plan.structured_data_question,
-            "Retrieve the H2N2 setting for SAMPLE_0083.",
+            "Retrieve the H2N2 setting for SAMPLE_X083.",
         )
         self.assertEqual(client.messages.calls[0]["messages"][0]["content"], question)
 
@@ -211,7 +211,7 @@ class PlanRequestTests(unittest.TestCase):
     def test_APP_identifier_does_not_override_classifier_output(self):
         result = plan_request(
             AgentState(query=UserQuery(raw_text=(
-                "How do the conditions for SAMPLE_0096 compare with high-rate CVD conditions?"
+                "How do the conditions for SAMPLE_X096 compare with high-rate CVD conditions?"
             ))),
             client=_Client({
                 "tasks": ["lookup", "compare"],
@@ -367,9 +367,9 @@ class PlanRequestTests(unittest.TestCase):
                 "and at or above 49.",
             ),
             (
-                "For SAMPLE_0083 step 3, return start temperature, end temperature, and duration.",
+                "For SAMPLE_X083 step 3, return start temperature, end temperature, and duration.",
                 "Return step_3_GrowthStartTemp, step_3_GrowthEndTemp, and step_3_GrowthDur "
-                "for SAMPLE_0083.",
+                "for SAMPLE_X083.",
             ),
         ]
 
@@ -393,7 +393,7 @@ class PlanRequestTests(unittest.TestCase):
 
     def test_published_research_literals_are_excluded_from_database_reference(self):
         question = (
-            "For project D2P2, use the database records to report each run’s chamber pressure, "
+            "For project PROJ-A, use the database records to report each run’s chamber pressure, "
             "growth rate, morphology, and quality outcomes. Then compare the recorded chamber "
             "pressures with the 90–180 Torr range reported in published research on large-area "
             "diamond growth using a 915 MHz reactor. Use the 90–180 Torr range and 915 MHz "
@@ -403,7 +403,7 @@ class PlanRequestTests(unittest.TestCase):
 
         reference = database_reference_question(question)
 
-        self.assertIn("project D2P2", reference)
+        self.assertIn("project PROJ-A", reference)
         self.assertNotIn("90", reference)
         self.assertNotIn("180", reference)
         self.assertNotIn("915", reference)
@@ -411,7 +411,7 @@ class PlanRequestTests(unittest.TestCase):
         self.assertEqual(
             _database_handoff_issues(
                 reference,
-                "For project D2P2, return growth_mean_pressure, growth_rate_µm_hr, morphology, and quality outcomes.",
+                "For project PROJ-A, return growth_mean_pressure, growth_rate_µm_hr, morphology, and quality outcomes.",
             ),
             [],
         )
