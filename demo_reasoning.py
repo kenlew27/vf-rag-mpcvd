@@ -30,14 +30,14 @@ items = [
         evidence_id=minter.mint(SourceType.STRUCTURED),
         source_type=SourceType.STRUCTURED,
         source_label="Run EXP-001 (experiment_records)",
-        content="growth_temp: 900°C\npressure: 300 torr\ngrowth_rate: 4.2 µm/hr",
+        content="growth_temp: 850°C\npressure: 120 torr\ngrowth_rate: 3.8 µm/hr",
         provenance=Provenance(origin_agent="table_agent", source_ref="bigquery", page_or_row="1"),
     ),
     EvidenceItem(
         evidence_id=minter.mint(SourceType.DOCUMENT),
         source_type=SourceType.DOCUMENT,
         source_label="Internal process note 2024",
-        content="At 300 torr, diamond growth rate peaks near 900°C. Nitrogen content below 5 ppm improves birefringence.",
+        content="At 120 torr, diamond growth rate peaks near 850°C. Nitrogen content below 50 ppm improves birefringence.",
         provenance=Provenance(origin_agent="internal_document_agent", retrieval_query="CVD diamond growth rate temperature"),
     ),
 ]
@@ -57,8 +57,8 @@ print(f"Packet: {len(packet.items)} items | hash: {packet.packet_hash()[:20]}...
 # 2. Fake synthesis output (what Claude would return)
 synthesis = SynthesisOutput(
     answer=(
-        "Run EXP-001 achieved a growth rate of 4.2 µm/hr at 900°C and 300 torr [EV-S-001]. "
-        "Internal documentation confirms that 300 torr combined with 900°C represents the "
+        "Run EXP-001 achieved a growth rate of 3.8 µm/hr at 850°C and 120 torr [EV-S-001]. "
+        "Internal documentation confirms that 120 torr combined with 850°C represents the "
         "peak growth window for diamond CVD [EV-D-001]."
     ),
     citations=["EV-S-001", "EV-D-001"],

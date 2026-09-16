@@ -132,11 +132,11 @@ proposition is supported.
 
 Examples:
 
-- Claim: `The cited record does not report a growth rate of 4.2 µm/hr.` Evidence:
-  `The measured growth rate was 4.2 µm/hr.` The source-attribution proposition
+- Claim: `The cited record does not report a growth rate of 3.8 µm/hr.` Evidence:
+  `The measured growth rate was 3.8 µm/hr.` The source-attribution proposition
   is `contradicted`.
-- Claim: `Every reactor recorded a growth rate of 4.2 µm/hr.` Evidence:
-  `Run R-17 recorded a growth rate of 4.2 µm/hr.` The universal-scope proposition
+- Claim: `Every reactor recorded a growth rate of 3.8 µm/hr.` Evidence:
+  `Run R-17 recorded a growth rate of 3.8 µm/hr.` The universal-scope proposition
   is `unsupported`.
 - Claim: `Increasing nitrogen caused growth to increase.` Evidence: `The
   nitrogen-enriched run had higher growth.` The causal proposition is
@@ -158,15 +158,15 @@ Examples:
 - Claim: `The measured value was 2.48.` Evidence reports `2.482` at three decimal
   places, and rounding to two decimal places changes no threshold, ordering, or
   scientific meaning. The rounded value is `supported`.
-- Claim: `The measured rate was 4.2 µm/hr for 24 hours.` Evidence establishes the
+- Claim: `The measured rate was 3.8 µm/hr for 24 hours.` Evidence establishes the
   rate but supplies no duration. The duration is material, so the complete claim
   is `unsupported`.
 
 Paired batch example:
 
-- Claim A: `Record R reports a growth rate of 4.2 µm/hr.` Structured evidence for
+- Claim A: `Record R reports a growth rate of 3.8 µm/hr.` Structured evidence for
   Record R reports that exact field and value. The claim is `supported`.
-- Claim B: `Record R reports a growth rate of 4.2 µm/hr during a separately
+- Claim B: `Record R reports a growth rate of 3.8 µm/hr during a separately
   conditioned run.` The same structured evidence establishes the rate but not
   the added condition, while a literature parcel discusses that condition only
   for other experiments. Split the claim: the rate proposition is `supported`,

@@ -343,7 +343,7 @@ class TestAgentQueryRoute(unittest.TestCase):
             evidence_id=minter.mint(SourceType.STRUCTURED),
             source_type=SourceType.STRUCTURED,
             source_label="Run EXP-001",
-            content="growth_rate: 4.2 µm/hr",
+            content="growth_rate: 3.8 µm/hr",
             provenance=Provenance(origin_agent="table_agent", source_ref="bigquery"),
         )
         packet = EvidencePacket(
@@ -356,7 +356,7 @@ class TestAgentQueryRoute(unittest.TestCase):
             lanes_attempted=["structured"],
         )
         synthesis = SynthesisOutput(
-            answer="Growth rate was 4.2 µm/hr [EV-S-001].",
+            answer="Growth rate was 3.8 µm/hr [EV-S-001].",
             citations=["EV-S-001"],
             confidence=ConfidenceLabel.MEDIUM,
             confidence_basis=["one structured data point"],
@@ -380,7 +380,7 @@ class TestAgentQueryRoute(unittest.TestCase):
         body = response.json()
         self.assertEqual("test-run", body["run_id"])
         self.assertIsNotNone(body["final_answer"])
-        self.assertEqual("Growth rate was 4.2 µm/hr [EV-S-001].", body["final_answer"]["synthesis"]["answer"])
+        self.assertEqual("Growth rate was 3.8 µm/hr [EV-S-001].", body["final_answer"]["synthesis"]["answer"])
 
     def test_synthesize_retrieval_question_runs_real_graph_with_injected_dependencies(self):
         from agent.graph import build_supervisor_agent as real_build_supervisor_agent
