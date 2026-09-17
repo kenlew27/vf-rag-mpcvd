@@ -1,6 +1,6 @@
 """BigQuery-backed chunk store."""
 
-from storage.storage_contracts import ChunkRecord, ChunkStore
+from storage.storage_contracts import ChunkRecord, DocumentRecord
 
 
 class BigQueryChunkStore:
@@ -15,4 +15,13 @@ class BigQueryChunkStore:
         raise NotImplementedError("requires BigQuery credentials")
 
     def get_chunks(self, chunk_ids: list[str]) -> list[ChunkRecord]:
+        raise NotImplementedError("requires BigQuery credentials")
+
+    def get_document(self, document_id: str) -> DocumentRecord:
+        raise NotImplementedError("requires BigQuery credentials")
+
+    def get_active_documents_by_filename_scope(self, *, original_filename: str, document_scope: str):
+        raise NotImplementedError("requires BigQuery credentials")
+
+    def list_active_documents(self):
         raise NotImplementedError("requires BigQuery credentials")

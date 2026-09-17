@@ -11,18 +11,28 @@ class PayloadTooLargeError(Exception):
 @dataclass
 class StagedPdf:
     """A PDF blob staged for processing."""
+    upload_id: str = ""
     gcs_uri: str = ""
     generation: int = 0
     content_hash: str = ""
     staging_gcs_uri: str = ""
+    size_bytes: int = 0
+    original_filename: str = ""
+    document_scope: str = ""
 
 
 @dataclass
 class PromotedPdf:
     """A staged PDF promoted to permanent storage."""
+    content_hash: str = ""
+    size_bytes: int = 0
     raw_gcs_uri: str = ""
     generation: int = 0
-    content_hash: str = ""
+    original_filename: str = ""
+    document_scope: str = ""
+    staging_gcs_uri: str = ""
+    staging_generation: int = 0
+    first_scope: str = ""
 
 
 def is_configured() -> bool:
@@ -47,6 +57,11 @@ def put_raw(document_id: str, ext: str, data: bytes) -> str:
 
 def stage_pdf(upload_id: str, data: bytes) -> StagedPdf:
     """Stage a PDF upload in GCS for processing."""
+    raise NotImplementedError("requires GCS credentials")
+
+
+async def stream_staging_pdf(upload_id: str, stream, **kwargs) -> StagedPdf:
+    """Stream an incoming upload to staging."""
     raise NotImplementedError("requires GCS credentials")
 
 

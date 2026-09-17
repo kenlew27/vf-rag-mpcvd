@@ -126,7 +126,7 @@ class PlanRequestTests(unittest.TestCase):
         self.assertEqual(client.messages.calls[0]["messages"][0]["content"], question)
 
     def test_explicit_reactors_cannot_be_rewritten_as_samples(self):
-        question = "For reactors REACTOR_XX and REACTOR_XX, compare pressure, growth rate, and quality outcomes."
+        question = "For reactors REACTOR_01 and REACTOR_02, compare pressure, growth rate, and quality outcomes."
         result = plan_request(
             AgentState(query=UserQuery(raw_text=question)),
             client=_Client({
@@ -134,7 +134,7 @@ class PlanRequestTests(unittest.TestCase):
                 "knowledge_sources": ["structured_data"],
                 "status": "ready",
                 "reasons": [],
-                "structured_data_question": "Retrieve pressure, growth rate, and quality outcomes for samples REACTOR_XX and REACTOR_XX.",
+                "structured_data_question": "Retrieve pressure, growth rate, and quality outcomes for samples REACTOR_01 and REACTOR_02.",
             }),
             model="claude-test",
         )
@@ -142,7 +142,7 @@ class PlanRequestTests(unittest.TestCase):
         assert result.request_plan is not None
         self.assertEqual(
             result.request_plan.structured_data_question,
-            "Retrieve pressure, growth rate, and quality outcomes for reactors REACTOR_XX and REACTOR_XX.",
+            "Retrieve pressure, growth rate, and quality outcomes for reactors REACTOR_01 and REACTOR_02.",
         )
 
     def test_compound_request_missing_database_question_clarifies_after_one_retry(self):
@@ -343,7 +343,7 @@ class PlanRequestTests(unittest.TestCase):
         text = (Path(__file__).parents[2] / "prompts" / "plan_request.md").read_text()
         self.assertIn("narrow metric lookup", text)
         self.assertIn("Retrieve <named metric or metrics> for <sample identifier>.", text)
-        self.assertIn("reactors REACTOR_XX and REACTOR_XX", text)
+        self.assertIn("reactors REACTOR_01 and REACTOR_02", text)
 
     def test_compact_vocabulary_contains_aliases_but_not_human_reference_material(self):
         vocabulary = database_vocabulary_context()

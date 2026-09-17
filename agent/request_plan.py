@@ -62,7 +62,7 @@ _LITERATURE_CLAUSE_RE = re.compile(
     re.IGNORECASE,
 )
 _REACTOR_REFERENCE_RE = re.compile(
-    r"\breactors?\s+((?:[A-Za-z0-9]+-[A-Za-z0-9]+)(?:\s*(?:,|and|or)\s*(?:[A-Za-z0-9]+-[A-Za-z0-9]+))*)",
+    r"\breactors?\s+((?:[A-Za-z0-9]+[-_][A-Za-z0-9]+)(?:\s*(?:,|and|or)\s*(?:[A-Za-z0-9]+[-_][A-Za-z0-9]+))*)",
     re.IGNORECASE,
 )
 

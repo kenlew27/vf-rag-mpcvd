@@ -6,8 +6,10 @@ from contextlib import contextmanager
 class agent_timing:
     """Dual-use: works as both a decorator and a context manager for timing agent steps."""
 
-    def __init__(self, name: str):
+    def __init__(self, name: str, *args, **kwargs):
         self.name = name
+        self.args = args
+        self.kwargs = kwargs
 
     def __call__(self, fn):
         return fn
@@ -24,6 +26,6 @@ def emit_agent_timing(name: str, elapsed_ms: float) -> None:
 
 
 @contextmanager
-def agent_timing_context(context: dict | str = ""):
+def agent_timing_context(context: dict | str | None = None):
     """Context manager that sets timing context for nested agent_timing calls."""
     yield
