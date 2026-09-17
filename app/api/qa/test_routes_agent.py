@@ -607,7 +607,7 @@ class TestAgentQueryRoute(unittest.TestCase):
     def test_query_stream_emits_keepalive_while_agent_is_delayed(self):
         fake_agent = MagicMock()
         fake_agent.invoke.side_effect = lambda _state: (
-            time.sleep(0.01)
+            time.sleep(0.05)
             or {
                 "request_plan": _ready_plan(),
                 "database_evidence": {},

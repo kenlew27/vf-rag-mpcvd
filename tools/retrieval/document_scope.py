@@ -36,4 +36,6 @@ def normalize_document_scope(scope) -> DocumentScope:
 
 def normalize_document_scopes(scopes: list) -> list[DocumentScope]:
     """Map a list of scope strings to :class:`DocumentScope` objects."""
+    if not scopes:
+        return [INTERNAL_SCOPE, EXTERNAL_SCOPE]
     return [normalize_document_scope(s) for s in scopes]
