@@ -70,6 +70,9 @@ def promote_pdf(staged: StagedPdf) -> PromotedPdf:
     raise NotImplementedError("requires GCS credentials")
 
 
+promote_staged_pdf = promote_pdf
+
+
 def delete_prefix(prefix: str) -> int:
     """Delete all blobs under a GCS prefix, return count deleted."""
     raise NotImplementedError("requires GCS credentials")
