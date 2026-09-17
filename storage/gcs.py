@@ -40,6 +40,16 @@ def is_configured() -> bool:
     return bool(os.environ.get("APP_GCS_BUCKET"))
 
 
+def parse_gcs_uri(uri: str) -> tuple[str, str]:
+    """Parse a gs://bucket/path URI into (bucket, path)."""
+    if uri.startswith("gs://"):
+        parts = uri[5:].split("/", 1)
+        bucket = parts[0]
+        path = parts[1] if len(parts) > 1 else ""
+        return bucket, path
+    return "", uri
+
+
 def read_text(gcs_uri: str) -> str:
     """Read a UTF-8 text blob from GCS."""
     raise NotImplementedError("requires GCS credentials")

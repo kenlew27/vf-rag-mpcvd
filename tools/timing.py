@@ -20,6 +20,9 @@ class agent_timing:
     def __exit__(self, *exc):
         return False
 
+    def set(self, **kwargs):
+        pass
+
 
 def emit_agent_timing(name: str, elapsed_ms: float) -> None:
     """Emit a timing measurement to the structured log."""
