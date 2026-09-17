@@ -19,7 +19,7 @@ class IngestionJob:
     raw_gcs_uri: str = ""
     staging_gcs_uri: str = ""
     owner_session_id: str = ""
-    batch_id: str = ""
+    batch_id: str | None = None
     original_filename: str = ""
     size_bytes: int = 0
     replaces_document_id: str | None = None
