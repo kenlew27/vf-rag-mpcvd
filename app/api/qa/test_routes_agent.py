@@ -37,6 +37,36 @@ class FakeMessages:
     def __init__(self) -> None:
         self.calls: list[dict] = []
 
+    def parse(self, **kwargs):
+        self.calls.append(kwargs)
+        messages = kwargs.get("messages") or []
+        user_content = messages[0]["content"] if messages else "[]"
+        try:
+            claims = json.loads(user_content)
+        except Exception:
+            claims = []
+
+        from agent.schemas import LLMClaimCheck, LLMPropositionCheck, LLMVerifierResponse, ClaimVerificationStatus
+        checks = [
+            LLMClaimCheck(
+                claim_id=c["claim_id"],
+                propositions=[
+                    LLMPropositionCheck(
+                        proposition="claim proposition",
+                        status=ClaimVerificationStatus.SUPPORTED,
+                        evidence_ids=["EV-L-001"],
+                    )
+                ],
+            )
+            for c in claims
+        ]
+        parsed = LLMVerifierResponse(checks=checks)
+        return SimpleNamespace(
+            content=[SimpleNamespace(type="text", text=json.dumps({"checks": [c.model_dump() for c in checks]}))],
+            parsed_output=parsed,
+            usage=SimpleNamespace(input_tokens=100, output_tokens=80),
+        )
+
     def create(self, **kwargs):
         self.calls.append(kwargs)
         schema = ((kwargs.get("output_config") or {}).get("format") or {}).get("schema") or {}
