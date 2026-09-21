@@ -33,6 +33,8 @@ from agent.run_log import log_error, write_run_log
 from agent.state import AgentState, SourceMode, UserQuery
 from tools.timing import agent_timing, agent_timing_context
 
+from app.api._helpers import normalize_document_ids
+
 router = APIRouter(prefix="/agent", tags=["agent"])
 logger = logging.getLogger(__name__)
 
@@ -134,7 +136,7 @@ def _agent_query_input(req: DataQueryRequest) -> tuple[AgentState, str]:
         raise HTTPException(503, "ANTHROPIC_MODEL env var is not set")
 
     source_mode = req.source_mode or "all"
-    document_ids = _normalize_document_ids(req.document_ids)
+    document_ids = normalize_document_ids(req.document_ids)
     if source_mode == "selected" and not document_ids:
         raise HTTPException(400, "document_ids must be provided when source_mode is selected")
     source_filters = {"document_id": document_ids} if document_ids else {}
@@ -147,15 +149,6 @@ def _agent_query_input(req: DataQueryRequest) -> tuple[AgentState, str]:
         include_debug_trace=req.include_debug_trace,
     )
     return initial_state, model
-
-
-def _normalize_document_ids(document_ids: list[str]) -> list[str]:
-    normalized: list[str] = []
-    for document_id in document_ids:
-        text = str(document_id).strip()
-        if text and text not in normalized:
-            normalized.append(text)
-    return normalized
 
 
 def _invoke_supervisor_agent(agent: object, initial_state: AgentState) -> object:

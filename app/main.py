@@ -3,10 +3,6 @@ app/main.py
 
 FastAPI entrypoint for the materials decision-support agent.
 
-Created now because the document upload endpoint is the first FastAPI endpoint
-requested (per repo_structure.md: "Add API skeleton only when first FastAPI
-endpoint is requested"). Kept minimal: wiring + CORS only. No agent logic here.
-
 Run:  uvicorn app.main:app --reload
 """
 
@@ -27,8 +23,7 @@ from app.api.routes_ingestion import (
     stop_job_status_listener,
 )
 from app.api.routes_vector_search import router as vector_search_router
-from app.api.routes_testing import router as testing_router
-from app.api.routes_workflows import close_workflow_service, router as workflows_router
+
 from tools.retrieval.reranker import warm_default_leaf_reranker
 
 logger = logging.getLogger(__name__)
@@ -44,7 +39,6 @@ async def lifespan(app: FastAPI):
     try:
         yield
     finally:
-        close_workflow_service()
         await stop_job_status_listener()
 
 
@@ -66,7 +60,7 @@ async def proxy_auth_boundary(request, call_next):
 # CORS: list exact frontend origins (do not use "*" with credentials).
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"],  # add the deployed frontend origin
+    allow_origins=["http://localhost:5173"],  # extend with production frontend origin before deployment
     allow_methods=["*"],
     allow_headers=["Authorization", "Content-Type"],
     allow_credentials=True,
@@ -77,8 +71,6 @@ app.include_router(ingestion_router)
 app.include_router(vector_search_router)
 app.include_router(bigquery_router)
 app.include_router(agent_router)
-app.include_router(workflows_router)
-app.include_router(testing_router)
 
 
 @app.get("/")

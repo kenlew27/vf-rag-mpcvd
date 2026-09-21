@@ -11,3 +11,12 @@ reactor_data/
 __pycache__/
 *.pyc
 .venv/
+
+# Runtime logs (generated during pipeline execution, not part of the release)
+*.jsonl
+run_logs/
+reasoning_steps.jsonl
+verification_steps.jsonl
+retrieve_document_steps.jsonl
+agent_errors.jsonl
+supervisor_calls.jsonl

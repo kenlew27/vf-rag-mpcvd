@@ -22,11 +22,10 @@ from storage.storage_contracts import DocumentRecord, ChunkStore
 from tools.retrieval.document_scope import DocumentScope, normalize_document_scope
 
 
+from app.api._constants import MAX_FILE_MB, MAX_FILE_BYTES, PDF_EXT
+
 router = APIRouter(prefix="/ingestion", tags=["ingestion"])
 
-MAX_FILE_MB = 50
-MAX_FILE_BYTES = MAX_FILE_MB * 1024 * 1024
-PDF_EXT = ".pdf"
 _TERMINAL_EVENT_STATUSES = frozenset({"completed", "embedded", "failed", "cancelled", "paused_quota"})
 
 

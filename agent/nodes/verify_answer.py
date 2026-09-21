@@ -30,14 +30,17 @@ from agent.schemas import (
 )
 from agent.state import AgentState
 from agent.verifier_terminal import build_terminal_synthesis
+from agent._utils import HASH_PREFIX_LEN, attr as _attr, build_anthropic_client as _build_anthropic_client
 
 logger = logging.getLogger(__name__)
 _PROMPT_PATH = Path(__file__).parents[1] / "prompts" / "verifier_prompt.md"
 _LOG_PATH = os.environ.get("VERIFICATION_LOG_PATH", "verification_steps.jsonl")
 _DEFAULT_VERIFIER_MODEL = "claude-haiku-4-5-20251001"
 VERIFIER_BATCH_SIZE = 2
+_MAX_BATCH_ATTEMPTS = 2
 _VERIFIER_MAX_TOKENS = 4096
-_VERIFIER_THINKING = {"type": "enabled", "budget_tokens": 2048, "display": "omitted"}
+_VERIFIER_THINKING_BUDGET = 2048
+_VERIFIER_THINKING = {"type": "enabled", "budget_tokens": _VERIFIER_THINKING_BUDGET, "display": "omitted"}
 _RECOVERY_INSTRUCTION = """
 
 ## Structured-output recovery
@@ -95,7 +98,7 @@ def verify_answer(state: AgentState, client: Any = None, verifier_model: str | N
         safe_synthesis = build_terminal_synthesis(assessments, state.final_answer.synthesis)
     result = VerificationResult(
         verifier_model=verifier_model,
-        verifier_prompt_version=hashlib.sha256(prompt.encode()).hexdigest()[:12],
+        verifier_prompt_version=hashlib.sha256(prompt.encode()).hexdigest()[:HASH_PREFIX_LEN],
         status=outcome,
         action=action,
         claims_checked=len(units),
@@ -120,7 +123,7 @@ def verify_answer(state: AgentState, client: Any = None, verifier_model: str | N
 
 def run_verifier_payload(
     payload: list[dict], *, client: Any = None, verifier_model: str | None = None,
-    _units_by_id: dict[str, ClaimUnit] | None = None, _prompt_text: str | None = None,
+    _prompt_text: str | None = None,
 ) -> tuple[list[ClaimAssessment], int, str]:
     """Validate the exact input, invoke the LLM, then deterministically derive policy."""
     inputs = _parse_input_payload(payload)
@@ -156,7 +159,7 @@ def _run_verifier_batch(
     """Verify one bounded claim batch, retrying invalid results with isolation."""
     by_id = {claim.claim_id: claim for claim in inputs}
     last_error: RuntimeError | None = None
-    for attempt in range(2):
+    for attempt in range(_MAX_BATCH_ATTEMPTS):
         try:
             response = client.messages.parse(
                 model=verifier_model or _DEFAULT_VERIFIER_MODEL,
@@ -309,15 +312,6 @@ def _proposition_evidence_ids(propositions: list[Any]) -> list[str]:
 def _uses_general_knowledge_only(state: AgentState) -> bool:
     plan = state.request_plan
     return bool(plan and plan.status is RequestStatus.READY and plan.knowledge_sources == [KnowledgeSource.GENERAL_KNOWLEDGE])
-
-
-def _build_anthropic_client() -> Any:
-    from anthropic import Anthropic
-    return Anthropic()
-
-
-def _attr(obj: Any, key: str, default: Any = None) -> Any:
-    return obj.get(key, default) if isinstance(obj, dict) else getattr(obj, key, default)
 
 
 def _append_log(state: AgentState, result: VerificationResult) -> None:

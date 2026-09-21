@@ -85,7 +85,7 @@ python demo_reasoning.py
 
 # 3. run the test suite
 python -m pytest agent/ app/ -q
-#    → 56+ unit tests covering intent classification, synthesis,
+#    → 122 unit tests covering intent classification, synthesis,
 #      citation validation, API routes, and auth boundaries
 
 # 4. reproduce paper statistics (Section 4.4)
@@ -111,7 +111,7 @@ No changes to pipeline code are required.
 
 ## Dependencies
 
-- Python 3.11+
+- Python 3.12+
 - Anthropic API (Claude Sonnet 4, Claude Haiku 4.5)
 - Voyage AI API (voyage-4 embeddings)
 - LanceDB (vector store)
@@ -134,4 +134,4 @@ MIT License — see [LICENSE](LICENSE).
 
 ## Citation
 
-[To be added after publication]
+Citation details will be provided upon acceptance. Until then, please cite this repository directly.

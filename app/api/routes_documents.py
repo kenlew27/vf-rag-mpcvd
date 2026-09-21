@@ -24,11 +24,11 @@ from storage.bigquery import BigQueryChunkStore
 from tools.retrieval.document_scope import normalize_document_scope
 from workers.delete_document import delete_document_artifacts
 
+from app.api._constants import MAX_FILE_MB, MAX_FILE_BYTES, PDF_EXT
+
 router = APIRouter(prefix="/documents", tags=["documents"])
 
-ALLOWED_EXT = {".pdf", ".docx", ".pptx", ".txt", ".md", ".csv", ".xlsx"}
-MAX_FILE_MB = 50
-MAX_FILE_BYTES = MAX_FILE_MB * 1024 * 1024
+ALLOWED_EXT = {PDF_EXT, ".docx", ".pptx", ".txt", ".md", ".csv", ".xlsx"}
 SAFE_FILENAME_RE = re.compile(r"[^A-Za-z0-9._ -]+")
 
 

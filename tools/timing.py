@@ -25,7 +25,8 @@ class agent_timing:
 
 
 def emit_agent_timing(name: str, elapsed_ms: float) -> None:
-    """Emit a timing measurement to the structured log."""
+    """Emit a timing measurement to the structured log (no-op stub for offline use)."""
+    pass
 
 
 @contextmanager

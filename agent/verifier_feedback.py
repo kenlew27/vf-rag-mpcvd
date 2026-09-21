@@ -31,7 +31,9 @@ _REQUIRED_REVISIONS = {
 }
 
 
-def build_revision_feedback(verification: Any) -> list[RevisionFeedbackItem]:
+from agent.schemas import VerificationResult
+
+def build_revision_feedback(verification: VerificationResult) -> list[RevisionFeedbackItem]:
     """Return one deterministic instruction for every non-supported claim."""
     feedback: list[RevisionFeedbackItem] = []
     for assessment in verification.assessments:

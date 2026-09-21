@@ -5,7 +5,7 @@ from __future__ import annotations
 import re
 from typing import Any
 
-from agent.schemas import ConfidenceLabel, ScopedAbstention, SynthesisOutput
+from agent.schemas import ConfidenceLabel, ScopedAbstention, SynthesisOutput, ClaimAssessment
 
 
 _INLINE_CITATION = re.compile(
@@ -14,7 +14,7 @@ _INLINE_CITATION = re.compile(
 
 
 def build_terminal_synthesis(
-    assessments: list[Any],
+    assessments: list[ClaimAssessment],
     failed_synthesis: SynthesisOutput,
 ) -> SynthesisOutput:
     """Render only claim-level assessments that remain supported."""
@@ -53,7 +53,7 @@ def build_terminal_synthesis(
     )
 
 
-def _render_answer(supported: list[Any]) -> str:
+def _render_answer(supported: list[ClaimAssessment]) -> str:
     return "\n".join(
         f"- {_without_terminal_punctuation(_clean_text(assessment.claim_text))} "
         f"[{', '.join(assessment.evidence_ids)}]."

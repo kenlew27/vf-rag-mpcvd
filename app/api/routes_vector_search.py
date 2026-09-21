@@ -32,6 +32,8 @@ from tools.retrieval.hybrid_retriever import (
 )
 from tools.retrieval.reranker import LeafReranker, rerank_and_expand_retrieved_chunks
 
+from app.api._helpers import normalize_document_ids
+
 router = APIRouter(prefix="/retrieval", tags=["retrieval"])
 
 _vector_indexes: dict[DocumentScope, VectorSearchIndex] = {}
@@ -120,29 +122,29 @@ def _load_keyword_index(document_scope: str = EXTERNAL_SCOPE) -> BM25ChunkSearch
         raise
 
 
-def _reset_vector_index_for_tests() -> None:
+def _reset_vector_index_for_tests() -> None:  # test-support
     with _vector_index_lock:
         _vector_indexes.clear()
 
 
-def _reset_keyword_index_for_tests() -> None:
+def _reset_keyword_index_for_tests() -> None:  # test-support
     with _keyword_index_lock:
         _keyword_indexes.clear()
 
 
-def _reset_chunk_store_for_tests() -> None:
+def _reset_chunk_store_for_tests() -> None:  # test-support
     global _chunk_store
     with _chunk_store_lock:
         _chunk_store = None
 
 
-def _reset_query_embedder_for_tests() -> None:
+def _reset_query_embedder_for_tests() -> None:  # test-support
     global _query_embedder
     with _query_embedder_lock:
         _query_embedder = None
 
 
-def _reset_retrieval_dependencies_for_tests() -> None:
+def _reset_retrieval_dependencies_for_tests() -> None:  # test-support
     _reset_vector_index_for_tests()
     _reset_keyword_index_for_tests()
     _reset_chunk_store_for_tests()
@@ -214,19 +216,10 @@ def vector_search(request: VectorSearchRequest) -> dict[str, Any]:
 
 def _request_filters(request: VectorSearchRequest) -> dict[str, Any]:
     filters = dict(request.filters)
-    document_ids = _normalize_document_ids(request.document_ids)
+    document_ids = normalize_document_ids(request.document_ids)
     if document_ids:
         filters["document_id"] = document_ids
     return filters
-
-
-def _normalize_document_ids(document_ids: list[str]) -> list[str]:
-    normalized: list[str] = []
-    for document_id in document_ids:
-        text = str(document_id).strip()
-        if text and text not in normalized:
-            normalized.append(text)
-    return normalized
 
 
 def _retrieve_leaf_chunks_for_scopes(
@@ -279,6 +272,7 @@ def _with_scope_metadata(chunk: RetrievedChunkRef, document_scope: DocumentScope
 
 
 def _get_route_reranker() -> LeafReranker | None:
+    """Stub returning None since no default reranker is available for offline routes."""
     return None
 
 

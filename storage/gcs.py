@@ -75,6 +75,11 @@ async def stream_staging_pdf(upload_id: str, stream, **kwargs) -> StagedPdf:
     raise NotImplementedError("requires GCS credentials")
 
 
+def load_staged_pdf(upload_id: str) -> StagedPdf:
+    """Load metadata for a staged PDF."""
+    raise NotImplementedError("requires GCS credentials")
+
+
 def promote_pdf(staged: StagedPdf) -> PromotedPdf:
     """Promote a staged PDF to permanent raw storage."""
     raise NotImplementedError("requires GCS credentials")

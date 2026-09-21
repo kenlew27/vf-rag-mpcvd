@@ -15,5 +15,8 @@ def load_synthesizer_system_prompt() -> str:
     return SYNTHESIZER_PROMPT_PATH.read_text().strip()
 
 
-PLANNER_SYSTEM_PROMPT = load_planner_system_prompt()
-SYNTHESIZER_SYSTEM_PROMPT = load_synthesizer_system_prompt()
+try:
+    PLANNER_SYSTEM_PROMPT = load_planner_system_prompt()
+    SYNTHESIZER_SYSTEM_PROMPT = load_synthesizer_system_prompt()
+except FileNotFoundError as exc:
+    raise FileNotFoundError("Could not find prompt files for synthesis. Please ensure the prompts directory exists.") from exc

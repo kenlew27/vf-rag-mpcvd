@@ -21,9 +21,11 @@ class EmbeddedQuery:
         return self.vector[item]
 
 
+_DEFAULT_EMBEDDING_DIM = 1024
+
 def embed_query(query: str, embedder: Any = None, model: str = "voyage-4", *args, **kwargs) -> EmbeddedQuery:
     """Return an EmbeddedQuery for *query* using the given embedding model or embedder."""
-    vec = [0.0] * 1024
+    vec = [0.0] * _DEFAULT_EMBEDDING_DIM
     if embedder is not None:
         if hasattr(embedder, "embed_text"):
             vec = embedder.embed_text(query)

@@ -31,6 +31,7 @@ class RetrievedChunkRef:
 
 
 MAX_LIMIT = 500
+_RRF_K = 60
 
 
 class KeywordChunkSearchIndex:
@@ -59,7 +60,7 @@ def retrieve_leaf_chunks(
     if vector_index is not None and query_vector is not None:
         hits = vector_index.search(query_vector, limit=search_limit, filters=filters)
         for rank, hit in enumerate(hits, start=1):
-            scores[hit.chunk_id] = scores.get(hit.chunk_id, 0.0) + (1.0 / (60 + rank))
+            scores[hit.chunk_id] = scores.get(hit.chunk_id, 0.0) + (1.0 / (_RRF_K + rank))
             semantic_scores[hit.chunk_id] = getattr(hit, "distance", 0.0)
             semantic_ranks[hit.chunk_id] = rank
             metas[hit.chunk_id] = dict(getattr(hit, "metadata", {}) or {})
@@ -67,7 +68,7 @@ def retrieve_leaf_chunks(
     if keyword_index is not None and query_text:
         hits = keyword_index.search(query_text, limit=search_limit, filters=filters)
         for rank, hit in enumerate(hits, start=1):
-            scores[hit.chunk_id] = scores.get(hit.chunk_id, 0.0) + (1.0 / (60 + rank)) + 1.0
+            scores[hit.chunk_id] = scores.get(hit.chunk_id, 0.0) + (1.0 / (_RRF_K + rank)) + 1.0
             keyword_scores[hit.chunk_id] = getattr(hit, "score", 0.0)
             keyword_ranks[hit.chunk_id] = rank
             if hit.chunk_id not in metas:

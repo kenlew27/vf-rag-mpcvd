@@ -9,6 +9,8 @@ from typing import Any, Protocol
 from agent.synthesis import models as synthesis_models
 from agent.synthesis.config import load_evidence_planner_config
 from agent.synthesis.prompts import load_synthesizer_system_prompt
+from agent.synthesis import _shared
+from agent._utils import build_anthropic_client as _build_anthropic_client
 
 
 class EvidenceSynthesizer(Protocol):
@@ -47,17 +49,9 @@ class AnthropicEvidenceSynthesizer:
             max_tokens=self.max_tokens,
             system=self.system_prompt,
             messages=[{"role": "user", "content": _dump_contract(request)}],
-            output_config=_json_schema_output_config(synthesis_models.SynthesisHypothesis),
+            output_config=_shared.json_schema_output_config(synthesis_models.SynthesisHypothesis),
         )
-        return synthesis_models.SynthesisHypothesis.model_validate(_read_json_response(response))
-
-
-def _build_anthropic_client() -> Any:
-    if not os.environ.get("ANTHROPIC_API_KEY"):
-        raise ValueError("ANTHROPIC_API_KEY is required when no client is provided")
-    from anthropic import Anthropic
-
-    return Anthropic()
+        return synthesis_models.SynthesisHypothesis.model_validate(_shared.read_json_response(response, "synthesizer"))
 
 
 def _dump_contract(value: Any) -> str:
@@ -67,44 +61,3 @@ def _dump_contract(value: Any) -> str:
         return json.dumps(value.model_dump())
     return json.dumps(value)
 
-
-def _json_schema_output_config(contract: Any) -> dict[str, Any] | None:
-    if not hasattr(contract, "model_json_schema"):
-        return None
-    schema = _strict_object_schema(contract.model_json_schema())
-    return {
-        "format": {
-            "type": "json_schema",
-            "schema": schema,
-        }
-    }
-
-
-def _strict_object_schema(schema: Any) -> Any:
-    if isinstance(schema, dict):
-        normalized = {key: _strict_object_schema(value) for key, value in schema.items()}
-        if normalized.get("type") == "object":
-            normalized["additionalProperties"] = False
-        return normalized
-    if isinstance(schema, list):
-        return [_strict_object_schema(item) for item in schema]
-    return schema
-
-
-def _read_json_response(response: Any) -> dict[str, Any]:
-    text = "".join(_read(block, "text", "") for block in getattr(response, "content", [])).strip()
-    if not text:
-        return {}
-    try:
-        return json.loads(text)
-    except json.JSONDecodeError as exc:
-        message = f"Anthropic synthesizer returned invalid JSON at character {exc.pos}"
-        if _read(response, "stop_reason") == "max_tokens":
-            message += "; response reached max_tokens before completing JSON"
-        raise ValueError(message) from exc
-
-
-def _read(value: Any, key: str, default: Any = None) -> Any:
-    if isinstance(value, dict):
-        return value.get(key, default)
-    return getattr(value, key, default)

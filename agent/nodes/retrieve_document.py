@@ -33,7 +33,7 @@ from tools.timing import agent_timing
 
 _PROMPT_PATH = Path(__file__).parents[1] / "prompts" / "retrieve_document.md"
 _LOG_PATH = os.environ.get("RETRIEVE_DOCUMENT_LOG_PATH", "retrieve_document_steps.jsonl")
-_rd_logger = logging.getLogger(__name__)
+logger = logging.getLogger(__name__)
 _METADATA_KEYS = (
     "title",
     "section_path",
@@ -56,6 +56,8 @@ _MAX_RERANK_CANDIDATES = 100
 # The affected BGE call peaked at 0.000655.  This fixed output-scale floor
 # excludes that false-positive band while retaining scores at or above 0.01.
 _MIN_BGE_RELEVANCE_SCORE = 0.01
+_HYDE_MAX_TOKENS = 300
+_REWRITE_MAX_TOKENS = 512
 
 
 def _content_only_relaxation_query(question: str) -> str:
@@ -695,7 +697,7 @@ def _generate_hyde_text(primary_query: str, *, client: Any, model: str) -> str:
     try:
         response = client.messages.create(
             model=model,
-            max_tokens=300,
+            max_tokens=_HYDE_MAX_TOKENS,
             messages=[{"role": "user", "content": prompt}],
         )
         return response.content[0].text.strip()
@@ -890,7 +892,7 @@ def rewrite_document_query(
     with agent_timing("document.rewrite_llm", timing_context=timing_context):
         response = client.messages.create(
             model=model,
-            max_tokens=512,
+            max_tokens=_REWRITE_MAX_TOKENS,
             system=prompt_text,
             messages=[{"role": "user", "content": raw_query}],
         )

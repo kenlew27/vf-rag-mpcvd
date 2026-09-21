@@ -4,13 +4,12 @@ agent/graph.py
 Compiled LangGraph subagents and the top-level supervisor graph.
 
 Architecture:
-  Supervisor → plan_request → supervisor node (pages subagents) → END
-  Reasoning agent (future) compiles the returned knowledge parcels into a final answer.
+  plan_request → supervisor (pages subagents) → synthesize_answer → verify_answer → compose_verified_answer → END
 
 Subagents:
   build_table_agent()      — pulls structured evidence from BigQuery.
   build_document_agent()   — retrieves scoped document context.
-  build_supervisor_agent() — plan the request → page appropriate subagents → return parcels.
+  build_supervisor_agent() — plan the request → page subagents → return parcels and synthesize answer.
 """
 
 from __future__ import annotations
@@ -30,6 +29,7 @@ from agent.nodes.supervisor import supervisor
 from agent.nodes.synthesize_answer import synthesize_answer
 from agent.nodes.verify_answer import verify_answer
 from agent.nodes.compose_verified_answer import compose_verified_answer
+from agent.schemas import WorkflowOutcome
 from agent.state import AgentState
 from tools.retrieval.document_scope import EXTERNAL_SCOPE, INTERNAL_SCOPE, normalize_document_scope
 from tools.timing import agent_timing
@@ -160,8 +160,8 @@ def build_supervisor_agent(
     supervisor_node pages the appropriate compiled subagents and writes their
     evidence parcels into state (database_evidence, document_evidence).
 
-    The reasoning agent (future) receives the populated state and compiles a
-    final answer. For now the route returns the raw parcels.
+    The synthesize_answer node receives the populated state and compiles a draft answer. 
+    The verify_answer node checks the answer against evidence and compose_verified_answer finalizes it.
 
     All heavyweight dependencies (bq_client, vector_index, …) are injected so
     the graph can be constructed once at server startup and reused per request.
@@ -293,7 +293,7 @@ def build_supervisor_agent(
 def _route_after_verify(state: AgentState) -> str:
     """Retry once when needed; otherwise compose the verified user-facing summary."""
     verification = state.final_answer.verification if state.final_answer is not None else None
-    if verification is not None and verification.status == "retry_triggered":
+    if verification is not None and verification.status == WorkflowOutcome.RETRY_TRIGGERED:
         return "synthesize_answer"
     return "compose_verified_answer"
 

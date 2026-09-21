@@ -9,6 +9,8 @@ from typing import Any, Protocol
 from agent.synthesis import models as synthesis_models
 from agent.synthesis.config import load_evidence_planner_config
 from agent.synthesis.prompts import load_planner_system_prompt
+from agent.synthesis import _shared
+from agent._utils import build_anthropic_client as _build_anthropic_client
 
 
 class EvidencePlanner(Protocol):
@@ -47,41 +49,33 @@ class AnthropicEvidencePlanner:
             max_tokens=self.max_tokens,
             system=self.system_prompt,
             messages=[{"role": "user", "content": _dump_planner_request(request)}],
-            output_config=_json_schema_output_config(synthesis_models.EvidencePlan),
+            output_config=_shared.json_schema_output_config(synthesis_models.EvidencePlan),
         )
-        return synthesis_models.EvidencePlan.model_validate(_read_json_response(response))
-
-
-def _build_anthropic_client() -> Any:
-    if not os.environ.get("ANTHROPIC_API_KEY"):
-        raise ValueError("ANTHROPIC_API_KEY is required when no client is provided")
-    from anthropic import Anthropic
-
-    return Anthropic()
+        return synthesis_models.EvidencePlan.model_validate(_shared.read_json_response(response, "planner"))
 
 
 def _dump_planner_request(request: Any) -> str:
-    bundle = _read(request, "evidence_bundle")
-    evidence = [_compact_evidence(item) for item in _read(bundle, "evidence", [])]
+    bundle = _shared.read(request, "evidence_bundle")
+    evidence = [_compact_evidence(item) for item in _shared.read(bundle, "evidence", [])]
     return json.dumps(
         {
-            "question": _read(request, "question"),
+            "question": _shared.read(request, "question"),
             "evidence_ids": [item["evidence_id"] for item in evidence],
             "evidence": evidence,
-            "database_completeness": _dump_plain(_read(bundle, "database_completeness")),
-            "missing_evidence": list(_read(bundle, "missing_evidence", []) or []),
+            "database_completeness": _dump_plain(_shared.read(bundle, "database_completeness")),
+            "missing_evidence": list(_shared.read(bundle, "missing_evidence", []) or []),
         }
     )
 
 
 def _compact_evidence(item: Any) -> dict[str, Any]:
-    kind = _read(item, "evidence_kind")
-    payload = _read(item, "payload", {}) or {}
-    row = _read(item, "row", {}) or {}
+    kind = _shared.read(item, "evidence_kind")
+    payload = _shared.read(item, "payload", {}) or {}
+    row = _shared.read(item, "row", {}) or {}
     return {
-        "evidence_id": _read(item, "evidence_id"),
+        "evidence_id": _shared.read(item, "evidence_id"),
         "evidence_kind": kind,
-        "source_agent": _read(item, "source_agent"),
+        "source_agent": _shared.read(item, "source_agent"),
         "scope": _evidence_scope(item, payload),
         "score": _evidence_score(item),
         "title": _evidence_title(payload),
@@ -91,7 +85,7 @@ def _compact_evidence(item: Any) -> dict[str, Any]:
 
 def _evidence_scope(item: Any, payload: dict[str, Any]) -> Any:
     return (
-        _read(item, "document_scope")
+        _shared.read(item, "document_scope")
         or payload.get("database_scope")
         or payload.get("scope")
         or payload.get("table")
@@ -99,10 +93,10 @@ def _evidence_scope(item: Any, payload: dict[str, Any]) -> Any:
 
 
 def _evidence_score(item: Any) -> Any:
-    relative_relevance = _read(item, "relative_relevance")
+    relative_relevance = _shared.read(item, "relative_relevance")
     if relative_relevance is not None:
         return relative_relevance
-    return _read(item, "retrieval_score_raw")
+    return _shared.read(item, "retrieval_score_raw")
 
 
 def _evidence_title(payload: dict[str, Any]) -> Any:
@@ -133,44 +127,3 @@ def _dump_plain(value: Any) -> Any:
         return value.model_dump()
     return value
 
-
-def _json_schema_output_config(contract: Any) -> dict[str, Any] | None:
-    if not hasattr(contract, "model_json_schema"):
-        return None
-    schema = _strict_object_schema(contract.model_json_schema())
-    return {
-        "format": {
-            "type": "json_schema",
-            "schema": schema,
-        }
-    }
-
-
-def _strict_object_schema(schema: Any) -> Any:
-    if isinstance(schema, dict):
-        normalized = {key: _strict_object_schema(value) for key, value in schema.items()}
-        if normalized.get("type") == "object":
-            normalized["additionalProperties"] = False
-        return normalized
-    if isinstance(schema, list):
-        return [_strict_object_schema(item) for item in schema]
-    return schema
-
-
-def _read_json_response(response: Any) -> dict[str, Any]:
-    text = "".join(_read(block, "text", "") for block in getattr(response, "content", [])).strip()
-    if not text:
-        return {}
-    try:
-        return json.loads(text)
-    except json.JSONDecodeError as exc:
-        message = f"Anthropic planner returned invalid JSON at character {exc.pos}"
-        if _read(response, "stop_reason") == "max_tokens":
-            message += "; response reached max_tokens before completing JSON"
-        raise ValueError(message) from exc
-
-
-def _read(value: Any, key: str, default: Any = None) -> Any:
-    if isinstance(value, dict):
-        return value.get(key, default)
-    return getattr(value, key, default)

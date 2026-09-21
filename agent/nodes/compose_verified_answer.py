@@ -10,8 +10,9 @@ import re
 from pathlib import Path
 from typing import Any
 
-from agent.schemas import ClaimVerificationStatus, ExecutiveSummary, FinalAnswer
+from agent.schemas import ClaimVerificationStatus, ExecutiveSummary, FinalAnswer, WorkflowOutcome
 from agent.state import AgentState
+from agent._utils import HASH_PREFIX_LEN, attr as _attr, strip_json_fence as _strip_json_fence
 
 logger = logging.getLogger(__name__)
 
@@ -31,7 +32,7 @@ def compose_verified_answer(
     """Attach an executive summary without changing the verifier record."""
     final_answer = state.final_answer
     verification = final_answer.verification if final_answer is not None else None
-    if final_answer is None or verification is None or verification.status.value == "retry_triggered":
+    if final_answer is None or verification is None or verification.status == WorkflowOutcome.RETRY_TRIGGERED:
         return {}
 
     supported = [
@@ -43,7 +44,7 @@ def compose_verified_answer(
         return {}
 
     prompt = _PROMPT_PATH.read_text(encoding="utf-8")
-    prompt_version = hashlib.sha256(prompt.encode()).hexdigest()[:12]
+    prompt_version = hashlib.sha256(prompt.encode()).hexdigest()[:HASH_PREFIX_LEN]
     summary_model = model or final_answer.model or _DEFAULT_MODEL
     try:
         if client is None:
@@ -131,17 +132,3 @@ def _inline_citation_ids(answer: str) -> list[str]:
         for group in _INLINE_CITATION.findall(answer)
         for evidence_id in _EVIDENCE_ID.findall(group)
     ]
-
-
-def _strip_json_fence(text: str) -> str:
-    stripped = text.strip()
-    if not stripped.startswith("```"):
-        return stripped
-    lines = stripped.splitlines()
-    if len(lines) >= 3 and lines[-1].strip() == "```" and lines[0].strip().lower() in {"```", "```json"}:
-        return "\n".join(lines[1:-1]).strip()
-    return stripped
-
-
-def _attr(obj: Any, key: str, default: Any = None) -> Any:
-    return obj.get(key, default) if isinstance(obj, dict) else getattr(obj, key, default)
