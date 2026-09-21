@@ -16,10 +16,9 @@
 |   +-- supervisor_routing.py   # Source routing
 |   +-- database_query_planner.py  # Structured-data query planning
 |   +-- document_query_planner.py  # Literature retrieval planning
-|   +-- verifier_eval.py        # Claim verification
 |   +-- verifier_feedback.py    # Feedback-guided retry
 |   +-- verifier_terminal.py    # Terminal safe synthesis
-|   +-- synthesize_batch.py     # Evidence-grounded synthesis
+|   +-- _utils.py               # Shared internal utilities
 |   +-- prompts/                # Prompt templates (Markdown)
 |   +-- guidance/               # Database schema guides and safety rules
 |   +-- nodes/                  # Graph node implementations
@@ -30,14 +29,14 @@
 |   |   +-- synthesize_answer.py   # Synthesis node
 |   |   +-- verify_answer.py       # Verification node
 |   |   +-- compose_verified_answer.py  # Graded delivery
-|   +-- synthesis/              # Multi-step synthesis pipeline
-|   +-- workflows/              # Workflow execution engine
+|   +-- synthesis/              # Multi-step evidence synthesis pipeline
 +-- tools/                      # Infrastructure stubs (see Note below)
 +-- storage/                    # Storage layer stubs (see Note below)
 +-- app/                        # FastAPI application layer
 +-- harness/                    # Evaluation harness
-|   +-- cvd_diamond_question_set.json   # 50 evaluation questions
-|   +-- build_verifier_v3_stress_balanced.py  # Fixture builder
+|   +-- cvd_diamond_question_set.json              # 50 evaluation questions
+|   +-- claim_verification_gold_labels.csv         # 500 atomic claims with gold labels
+|   +-- build_verifier_v3_stress_balanced.py       # Fixture builder
 |   +-- build_cvd_synthesis_actual_verifier_corpus.py
 +-- evaluation/                 # Anonymised scientist evaluation (see README inside)
 +-- compute_statistics.py       # Reproduce all reported statistics
@@ -60,7 +59,7 @@ access to the cloud environment.
 |:---------|:------------|
 | Pipeline source code | Complete 6-stage architecture: intent classification, structured retrieval with deterministic guardrails, literature retrieval with reciprocal-rank fusion, evidence-grounded synthesis, proposition-level claim verification, and feedback-guided retry |
 | CVD diamond question set | 50 questions across 3 complexity buckets (B1: database lookup, B2: database + literature, R: research hypothesis) |
-| Claim verification fixtures | 1,203 atomic claims with gold labels (supported/unsupported/contradicted) derived from genuine model outputs |
+| Claim verification fixtures | 500 atomic claims with gold labels (supported/unsupported/contradicted) derived from genuine model outputs |
 | Scientist evaluation scores | 100 anonymised ratings from 2 independent domain scientists on groundedness, correctness, and scientific rigor (5-point Likert scales) |
 | Scoring scripts | Reproduce all Wilson CIs, means, SDs, inter-rater agreement, and bucket breakdowns |
 | Evaluation rubric | Definitions for all three rating dimensions |
