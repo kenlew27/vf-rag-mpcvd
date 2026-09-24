@@ -39,8 +39,19 @@
 |   +-- build_verifier_v3_stress_balanced.py       # Fixture builder
 |   +-- build_cvd_synthesis_actual_verifier_corpus.py
 +-- evaluation/                 # Anonymised scientist evaluation (see README inside)
++-- figures/                    # Publication figures (300 dpi, B&W/greyscale)
+|   +-- figure_1.png            # Six-stage pipeline architecture
+|   +-- figure_2.png            # Verification and retry loop
+|   +-- figure_3.png            # Stage-decomposed evaluation chart
+|   +-- figure_4.png            # System ablation chart (verifier + retry)
+|   +-- figure_5.png            # Atomic-claim accuracy by gold label
+|   +-- figure_6.jpg            # Score distribution (scientist evaluation)
 +-- compute_statistics.py       # Reproduce all reported statistics
 +-- demo_reasoning.py           # Standalone demo (no API keys required)
++-- regenerate_figure_4.py      # Regenerate Fig. 4 (ablation chart)
++-- regenerate_figure_6.py      # Regenerate Fig. 6 (score distribution)
++-- fix_figure_placement.py     # Assemble manuscript with correct figure-caption order
++-- apply_manuscript_edits.py   # Apply text edits to manuscript.docx / ESI.docx
 +-- requirements.txt            # Python dependencies
 +-- .env.example                # Required environment variables
 +-- LICENSE                     # MIT License
@@ -63,6 +74,7 @@ access to the cloud environment.
 | Scientist evaluation scores | 100 anonymised ratings from 2 independent domain scientists on groundedness, correctness, and scientific rigor (5-point Likert scales) |
 | Scoring scripts | Reproduce all Wilson CIs, means, SDs, inter-rater agreement, and bucket breakdowns |
 | Evaluation rubric | Definitions for all three rating dimensions |
+| Publication figures | All 6 paper figures at 300 dpi (B&W/greyscale); regeneration scripts included |
 
 ## Not Included (Proprietary)
 
