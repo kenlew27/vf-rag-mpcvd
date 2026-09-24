@@ -7,8 +7,7 @@ Regenerates Fig. 4 — ablation bar chart — with:
     (sits above the bars; does not clip through them)
 
 Saves to:
-  - DD_submission/figures/figure_4.png  (submission copy)
-  - new_figures/figure_4.png            (working copy)
+  - figures/figure_4.png  (relative to repo root)
 """
 
 import matplotlib

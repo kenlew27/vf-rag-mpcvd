@@ -7,9 +7,8 @@ Regenerates Fig. 6 — scientist evaluation score distribution — with:
   - Black, white, and grey palette (matching other figures)
   - Cleaner layout
 
-Saves to both:
-  - DD_submission/figures/figure_6.jpg  (for submission)
-  - new_figures/figure_6.jpg
+Saves to:
+  - figures/figure_6.jpg  (relative to repo root)
 """
 
 import matplotlib
