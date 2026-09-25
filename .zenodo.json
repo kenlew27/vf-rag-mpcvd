@@ -1,0 +1,45 @@
+{
+  "title": "Verification-first retrieval-augmented generation for trustworthy decision support in MPCVD diamond growth",
+  "description": "Source code, evaluation data, and publication figures for the paper submitted to Digital Discovery (RSC). Includes a complete 6-stage verification-first RAG pipeline, CVD diamond evaluation question set, claim-verification benchmark fixtures, anonymised scientist evaluation scores, and scoring scripts that reproduce all reported statistics.",
+  "creators": [
+    {
+      "name": "Pang, Bonnie",
+      "affiliation": "Great Lakes Crystal Technologies"
+    },
+    {
+      "name": "Nakornsri, Enzo",
+      "affiliation": "Great Lakes Crystal Technologies"
+    },
+    {
+      "name": "Lew, Ken",
+      "affiliation": "Great Lakes Crystal Technologies"
+    },
+    {
+      "name": "Herrera Rodriguez, Cristian",
+      "affiliation": "Great Lakes Crystal Technologies"
+    },
+    {
+      "name": "Tran, Thanh",
+      "affiliation": "University of Chicago"
+    }
+  ],
+  "keywords": [
+    "retrieval-augmented generation",
+    "claim verification",
+    "diamond growth",
+    "MPCVD",
+    "materials informatics",
+    "large language models",
+    "scientific decision support"
+  ],
+  "license": "MIT",
+  "upload_type": "software",
+  "access_right": "open",
+  "related_identifiers": [
+    {
+      "identifier": "https://github.com/kenlew27/vf-rag-mpcvd",
+      "relation": "isSupplementTo",
+      "scheme": "url"
+    }
+  ]
+}

@@ -1,0 +1,54 @@
+cff-version: 1.2.0
+message: "If you use this software or data, please cite it using the metadata below."
+title: "Verification-first retrieval-augmented generation for trustworthy decision support in MPCVD diamond growth"
+version: 1.0.0
+date-released: "2026-09-25"
+license: MIT
+repository-code: "https://github.com/kenlew27/vf-rag-mpcvd"
+authors:
+  - family-names: Pang
+    given-names: Bonnie
+    affiliation: "Great Lakes Crystal Technologies"
+  - family-names: Nakornsri
+    given-names: Enzo
+    affiliation: "Great Lakes Crystal Technologies"
+  - family-names: Lew
+    given-names: Ken
+    affiliation: "Great Lakes Crystal Technologies"
+  - family-names: Herrera Rodriguez
+    given-names: Cristian
+    affiliation: "Great Lakes Crystal Technologies"
+  - family-names: Tran
+    given-names: Thanh
+    affiliation: "University of Chicago"
+keywords:
+  - retrieval-augmented generation
+  - claim verification
+  - diamond growth
+  - MPCVD
+  - materials informatics
+  - large language models
+abstract: >
+  Complete source code, evaluation data, and figures for a verification-first
+  RAG architecture for MPCVD single-crystal diamond growth. Includes a
+  6-stage pipeline, CVD diamond question set, claim-verification benchmark,
+  scientist evaluation scores, and reproducible statistics scripts.
+preferred-citation:
+  type: article
+  title: "Verification-first retrieval-augmented generation for trustworthy decision support in MPCVD diamond growth"
+  authors:
+    - family-names: Pang
+      given-names: Bonnie
+    - family-names: Nakornsri
+      given-names: Enzo
+    - family-names: Lew
+      given-names: Ken
+    - family-names: Herrera Rodriguez
+      given-names: Cristian
+    - family-names: Tran
+      given-names: Thanh
+  journal: "Digital Discovery"
+  publisher:
+    name: "Royal Society of Chemistry"
+  year: 2026
+  status: submitted
