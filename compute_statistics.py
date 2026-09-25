@@ -53,10 +53,10 @@ def main():
     c_mean, c_sd = mean_sd(correct)
     r_mean, r_sd = mean_sd(rigor)
 
-    print(f"\n=== Dimension Means ===")
-    print(f"  Groundedness: {g_mean} (SD {g_sd})")
-    print(f"  Correctness:  {c_mean} (SD {c_sd})")
-    print(f"  Rigor:        {r_mean} (SD {r_sd})")
+    print(f"\n=== Dimension Means (Table 3) ===")
+    print(f"  Groundedness: {g_mean:.2f} (SD {g_sd:.2f})")
+    print(f"  Correctness:  {c_mean:.2f} (SD {c_sd:.2f})")
+    print(f"  Rigor:        {r_mean:.2f} (SD {r_sd:.2f})")
 
     # Proportion >= 4
     g_ge4 = sum(1 for v in grounded if v >= 4)
@@ -68,13 +68,18 @@ def main():
         pct, lo, hi = wilson_ci(k_val, n)
         print(f"  {label}: {pct}% [{lo}%, {hi}%]  ({k_val}/{n})")
 
-    # Perfect 5s for groundedness
+    # Perfect 5s — all three dimensions
     g_5 = sum(1 for v in grounded if v == 5)
-    print(f"\n  Groundedness perfect 5: {g_5}/{n}")
+    c_5 = sum(1 for v in correct  if v == 5)
+    r_5 = sum(1 for v in rigor    if v == 5)
+    print(f"\n=== Perfect 5s (Table 3) ===")
+    print(f"  Groundedness:  {g_5}/{n}")
+    print(f"  Correctness:   {c_5}/{n}")
+    print(f"  Rigor:         {r_5}/{n}")
 
     # Below-3 exceptions
     below3 = sum(1 for i in range(n) if grounded[i] < 3 or correct[i] < 3 or rigor[i] < 3)
-    print(f"  Ratings with any dimension < 3: {below3}/{n}")
+    print(f"\n  Ratings with any dimension < 3: {below3}/{n}")
 
     # By bucket
     print(f"\n=== By Complexity Bucket ===")

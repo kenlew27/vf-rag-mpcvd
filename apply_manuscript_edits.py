@@ -90,6 +90,9 @@ def find_para_by_text(doc: Document, search: str, case_insensitive=False) -> lis
 # The abstract in the docx already has "blocking-violation rate" but doesn't define terms.
 # Matching the ACTUAL text in the docx (from inspection).
 
+# NOTE: ABSTRACT_OLD is the pre-edit source text (from manuscript.docx before edits).
+# ABSTRACT_NEW is the replacement. If re-running from scratch, ensure manuscript.docx
+# still contains ABSTRACT_OLD verbatim.
 ABSTRACT_OLD = (
     "verification reduces the blocking-violation rate from 77% to 10% (87% relative reduction) "
     "while retry recovers delivery to approximately 90%. Two domain scientists independently rate "
