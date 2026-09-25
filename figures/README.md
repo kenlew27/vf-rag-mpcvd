@@ -3,19 +3,18 @@
 Publication-quality figures for *Verification-first retrieval-augmented generation
 for trustworthy decision support in MPCVD diamond growth* (Digital Discovery, RSC).
 
-All figures are 600 DPI TIFF, B&W/greyscale, rendered with Matplotlib (Figs. 4 and 6
-regenerated from scripts; Figs. 1, 2, 3, 5 converted from source PNG).
+All figures are 600 DPI TIFF, B&W/greyscale.
 
 ## Figure Inventory
 
-| File | Description | Section | Script |
-|:-----|:------------|:--------|:-------|
-| `figure_1.tiff` | Six-stage verification-first pipeline architecture | §2.1 | — |
-| `figure_2.tiff` | Verification and retry loop flowchart | §2.3 | — |
-| `figure_3.tiff` | Stage-decomposed evaluation (primary metric per stage) | §4.1 | — |
-| `figure_4.tiff` | System ablation: verifier + retry contributions | §4.2 | `regenerate_figure_4.py` |
-| `figure_5.tiff` | Atomic-claim action accuracy by gold-label status | §4.2 | — |
-| `figure_6.tiff` | Score distribution across three evaluation dimensions | §4.4 | `regenerate_figure_6.py` |
+| File | Description | Section |
+|:-----|:------------|:--------|
+| `figure_1.tiff` | Six-stage verification-first pipeline architecture | §2.1 |
+| `figure_2.tiff` | Verification and retry loop flowchart | §2.3 |
+| `figure_3.tiff` | Stage-decomposed evaluation (primary metric per stage) | §4.1 |
+| `figure_4.tiff` | System ablation: verifier + retry contributions | §4.2 |
+| `figure_5.tiff` | Atomic-claim action accuracy by gold-label status | §4.2 |
+| `figure_6.tiff` | Score distribution across three evaluation dimensions | §4.4 |
 
 ## SHA-256 Integrity Hashes
 
@@ -39,15 +38,3 @@ for f in sorted(pathlib.Path('figures').glob('*.tiff')):
     print(f.name, hashlib.sha256(f.read_bytes()).hexdigest())
 "
 ```
-
-## Regenerating Figures
-
-```bash
-# Fig. 4 — system ablation chart (vertical 87% reduction bracket)
-python regenerate_figure_4.py
-
-# Fig. 6 — score distribution (B&W grouped bar chart, single legend)
-python regenerate_figure_6.py
-```
-
-Figs. 1, 2, 3, and 5 were produced externally and are provided as-is.

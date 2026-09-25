@@ -36,24 +36,24 @@
 +-- harness/                    # Evaluation harness
 |   +-- cvd_diamond_question_set.json              # 50 evaluation questions
 |   +-- claim_verification_gold_labels.csv         # 500 atomic claims with gold labels
-|   +-- build_verifier_v3_stress_balanced.py       # Fixture builder
-|   +-- build_cvd_synthesis_actual_verifier_corpus.py
-+-- evaluation/                 # Anonymised scientist evaluation (see README inside)
-+-- figures/                    # Publication figures (300 dpi, B&W/greyscale)
-|   +-- figure_1.png            # Six-stage pipeline architecture
-|   +-- figure_2.png            # Verification and retry loop
-|   +-- figure_3.png            # Stage-decomposed evaluation chart
-|   +-- figure_4.png            # System ablation chart (verifier + retry)
-|   +-- figure_5.png            # Atomic-claim accuracy by gold label
-|   +-- figure_6.jpg            # Score distribution (scientist evaluation)
-+-- compute_statistics.py       # Reproduce all reported statistics
+|   +-- build_verifier_v3_stress_balanced.py       # Fixture construction script
+|   +-- build_cvd_synthesis_actual_verifier_corpus.py  # Corpus builder
++-- evaluation/                 # Anonymised scientist evaluation scores
+|   +-- scientist_scores_grader_A.csv
+|   +-- scientist_scores_grader_B.csv
++-- figures/                    # Publication figures (600 DPI TIFF, B&W/greyscale)
+|   +-- figure_1.tiff           # Six-stage pipeline architecture
+|   +-- figure_2.tiff           # Verification and retry loop
+|   +-- figure_3.tiff           # Stage-decomposed evaluation chart
+|   +-- figure_4.tiff           # System ablation chart (verifier + retry)
+|   +-- figure_5.tiff           # Atomic-claim accuracy by gold label
+|   +-- figure_6.tiff           # Score distribution (scientist evaluation)
++-- compute_statistics.py       # Reproduce all reported statistics (Table 3)
 +-- demo_reasoning.py           # Standalone demo (no API keys required)
-+-- regenerate_figure_4.py      # Regenerate Fig. 4 (ablation chart)
-+-- regenerate_figure_6.py      # Regenerate Fig. 6 (score distribution)
-+-- fix_figure_placement.py     # Assemble manuscript with correct figure-caption order
-+-- apply_manuscript_edits.py   # Apply text edits to manuscript.docx / ESI.docx
 +-- requirements.txt            # Python dependencies
 +-- .env.example                # Required environment variables
++-- CITATION.cff                # Software citation metadata
++-- .zenodo.json                # Zenodo archive metadata
 +-- LICENSE                     # MIT License
 +-- README.md                   # This file
 ```
@@ -72,9 +72,8 @@ access to the cloud environment.
 | CVD diamond question set | 50 questions across 3 complexity buckets (B1: database lookup, B2: database + literature, R: research hypothesis) |
 | Claim verification fixtures | 500 atomic claims with gold labels (supported/unsupported/contradicted) derived from genuine model outputs |
 | Scientist evaluation scores | 100 anonymised ratings from 2 independent domain scientists on groundedness, correctness, and scientific rigor (5-point Likert scales) |
-| Scoring scripts | Reproduce all Wilson CIs, means, SDs, inter-rater agreement, and bucket breakdowns |
-| Evaluation rubric | Definitions for all three rating dimensions |
-| Publication figures | All 6 paper figures at 300 dpi (B&W/greyscale); regeneration scripts included |
+| Scoring scripts | Reproduce all Wilson CIs, means, SDs, inter-rater agreement, and bucket breakdowns reported in the paper |
+| Publication figures | All 6 paper figures at 600 DPI TIFF (B&W/greyscale) with SHA-256 integrity hashes |
 
 ## Not Included (Proprietary)
 
@@ -85,34 +84,32 @@ The structured experimental database (BigQuery table of MPCVD reactor runs) cont
 Everything below runs offline with no API keys or cloud access.
 
 ```bash
-# 1. set up
+# 1. Set up environment
 python -m venv .venv && source .venv/bin/activate   # Windows: .venv\Scripts\activate
 pip install -r requirements.txt
 
-# 2. run the deterministic reasoning demo (no API keys needed)
+# 2. Run the deterministic reasoning demo (no API keys needed)
 python demo_reasoning.py
 #    → builds an EvidencePacket, synthesises an answer, runs citation
 #      checks, extracts claims, and formats a verifier payload
 
-# 3. run the test suite
+# 3. Run the test suite (122 unit tests)
 python -m pytest agent/ app/ -q
-#    → 122 unit tests covering intent classification, synthesis,
-#      citation validation, API routes, and auth boundaries
 
-# 4. reproduce paper statistics (Section 4.4)
+# 4. Reproduce all paper statistics (Table 3, Section 4.4)
 python compute_statistics.py
 #    → Wilson CIs, means/SDs, inter-rater agreement, bucket breakdowns
-#      (requires evaluation CSVs in evaluation/)
 ```
 
 `demo_reasoning.py` exercises the core data contracts end-to-end without
-calling any LLM or database.  It is the fastest way to verify that the
+calling any LLM or database. It is the fastest way to verify that the
 deterministic layers (evidence packaging, citation checking, claim
 extraction, verifier payload construction) work as described in the paper.
 
 ## Domain Portability
 
-The architecture is designed to be domain-portable. Adapting it to a different materials system (e.g., thin-film photovoltaics, battery electrodes, heterogeneous catalysts) requires substituting three domain assets:
+The architecture is designed to be domain-portable. Adapting it to a different
+materials system requires substituting three domain assets:
 
 1. **Database schema** — a structured table of experimental records
 2. **Document corpus** — internal reports and/or literature PDFs
@@ -136,8 +133,10 @@ No changes to pipeline code are required.
 | Intent classification | Claude Sonnet 4 (claude-sonnet-4-6) | Anthropic |
 | Evidence synthesis | Claude Sonnet 4 (claude-sonnet-4-6) | Anthropic |
 | Claim verification | Claude Haiku 4.5 (claude-haiku-4-5-20251001) | Anthropic |
-| Dense embeddings | voyage-4 (1,024-dim) | Voyage AI |
+| Dense embeddings | voyage-4 | Voyage AI |
 | Reranker | bge-reranker-base | BAAI |
+
+All commercial model queries were executed in September 2026.
 
 ## License
 
@@ -145,4 +144,5 @@ MIT License — see [LICENSE](LICENSE).
 
 ## Citation
 
-Citation details will be provided upon acceptance. Until then, please cite this repository directly.
+If you use this code or data, please cite using the metadata in [CITATION.cff](CITATION.cff).
+Citation details will be updated upon acceptance.
