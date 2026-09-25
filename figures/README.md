@@ -32,9 +32,5 @@ Generated: 2026-09-25 (TIFF 600 DPI versions)
 Verify integrity with:
 
 ```bash
-python -c "
-import hashlib, pathlib
-for f in sorted(pathlib.Path('figures').glob('*.tiff')):
-    print(f.name, hashlib.sha256(f.read_bytes()).hexdigest())
-"
+python -c "import hashlib,pathlib;[print(f.name,hashlib.sha256(f.read_bytes()).hexdigest()) for f in sorted(pathlib.Path('figures').glob('*.tiff'))]"
 ```
